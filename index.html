@@ -34,6 +34,9 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  .lenis.lenis-stopped{overflow:hidden}
   body{
     font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
     background:var(--bg);
@@ -80,7 +83,7 @@
   .btn--outline:hover{border-color:var(--navy);transform:translateY(-2px)}
 
   /* reveal */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0ms)}
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--d,0ms);will-change:opacity,transform}
   .reveal.in-view{opacity:1;transform:none}
 
   /* ---------- NAV ---------- */
@@ -193,7 +196,8 @@
   @keyframes rise{to{opacity:1;transform:none}}
 
   /* hero visual */
-  .hero__visual{position:relative;min-height:440px}
+  .hero__visual{position:relative;min-height:440px;will-change:transform}
+  .hero__copy{will-change:transform}
   .panel{
     background:rgba(255,255,255,.06);
     border:1px solid rgba(255,255,255,.12);
@@ -417,6 +421,51 @@
   .totop.is-visible{opacity:1;transform:none;pointer-events:auto}
   .totop:hover{background:var(--navy-3)}
   .totop svg{width:18px;height:18px}
+
+  /* ---------- SMALL DEVICES ---------- */
+  @media (max-width:640px){
+    .container{padding:0 20px}
+    .section{padding:72px 0}
+    .section-head{margin-bottom:36px}
+    .section-head h2{font-size:clamp(1.75rem,8vw,2.2rem)}
+    .section-head p{font-size:.98rem}
+    .eyebrow{font-size:.7rem;letter-spacing:.1em}
+    .eyebrow::before{width:20px}
+    .btn{padding:13px 20px;font-size:.92rem}
+    .hero{padding:64px 0 72px}
+    .hero h1{font-size:clamp(2.2rem,10.5vw,2.9rem);margin-top:16px}
+    .hero .lead{font-size:1rem;margin-top:18px}
+    .hero__cta{margin-top:28px;gap:10px}
+    .hero__cta .btn{width:100%;justify-content:center}
+    .hero__points{margin-top:30px;gap:12px;flex-direction:column}
+    .panel--main{padding:20px}
+    .marquee{padding:14px 0}
+    .marquee__track{animation-duration:26s}
+    .card{padding:26px 22px}
+    .why__list li{grid-template-columns:48px 1fr;gap:14px;padding:26px 0}
+    .why__list .num{font-size:1.7rem}
+    .why__list li:hover{transform:none}
+    .why__grid .section-head .btn{margin-top:20px}
+    .step{padding:0 22px 26px}
+    .due__item{padding:22px 20px}
+    .due__date{font-size:2rem}
+    .cta{padding:64px 0}
+    .cta__box{padding:36px 24px;border-radius:22px}
+    .cta__actions .btn{width:100%;justify-content:center}
+    .form .btn{margin-top:20px}
+    footer{padding:44px 0 24px}
+    .footer__bottom{flex-direction:column;gap:6px;font-size:.78rem}
+    .totop{right:16px;bottom:16px;width:42px;height:42px}
+  }
+  @media (max-width:380px){
+    .container{padding:0 16px}
+    .brand{font-size:1rem}
+    .brand__mark{width:34px;height:34px;font-size:1.15rem}
+    .hero h1{font-size:2.1rem}
+    .ccard{padding:16px}
+    .ccard strong{font-size:.9rem}
+    .form{padding:22px 16px}
+  }
 
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -818,8 +867,55 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </a>
 
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 (function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lenis = null;
+
+  // Inertial smooth scrolling (falls back to native smooth scroll if the library fails to load)
+  if (window.Lenis && !reduced) {
+    lenis = new Lenis({
+      duration: 1.6,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.3,
+      syncTouch: false
+    });
+    const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
+
+  // Anchor links: eased scroll with nav offset
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      if (lenis) {
+        lenis.scrollTo(target, { offset: -76, duration: 1.8 });
+      } else {
+        target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      }
+      history.replaceState(null, '', id);
+    });
+  });
+
+  // Hero parallax on wide screens
+  const heroCopy = document.querySelector('.hero__copy');
+  const heroVisual = document.querySelector('.hero__visual');
+  const parallax = (y) => {
+    if (reduced || window.innerWidth < 980) { heroCopy.style.transform = ''; heroVisual.style.transform = ''; return; }
+    const p = Math.min(y, 900);
+    heroCopy.style.transform = 'translate3d(0,' + (p * 0.18) + 'px,0)';
+    heroVisual.style.transform = 'translate3d(0,' + (p * 0.08) + 'px,0)';
+  };
+  if (lenis) lenis.on('scroll', ({ scroll }) => parallax(scroll));
+  else window.addEventListener('scroll', () => parallax(window.scrollY), { passive: true });
+
   const nav = document.getElementById('nav');
   const toggle = document.getElementById('navToggle');
   const links = document.querySelectorAll('#navLinks a');
