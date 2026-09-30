@@ -8,8 +8,15 @@
 <meta property="og:title" content="Taxfin Consulting — Bookkeeping, GST, TDS & Audit Support">
 <meta property="og:description" content="Accounting and compliance handled end to end: bookkeeping, GST and TDS filing, financial statements and audit support.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://sajmal-rndev.github.io/taxfin-consulting/">
+<meta property="og:image" content="https://sajmal-rndev.github.io/taxfin-consulting/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sajmal-rndev.github.io/taxfin-consulting/assets/og.png">
 <meta name="theme-color" content="#0B1D33">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1D33'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' text-anchor='middle' fill='%23C9A227'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="apple-touch-icon" href="assets/logo-mark-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -98,12 +105,8 @@
   .nav__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:76px;transition:height .35s var(--ease)}
   .nav.is-scrolled .nav__inner{height:64px}
   .brand{display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:800;font-size:1.1rem;letter-spacing:-.01em}
-  .brand__mark{
-    width:38px;height:38px;border-radius:10px;
-    background:var(--navy);color:var(--gold-2);display:grid;place-items:center;
-    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.3rem;
-    transition:transform .35s var(--ease);
-  }
+  .brand__mark{width:38px;height:38px;display:block;transition:transform .35s var(--ease)}
+  .brand__mark svg{width:100%;height:100%;border-radius:10px;box-shadow:0 4px 12px -4px rgba(11,29,51,.4)}
   .brand:hover .brand__mark{transform:rotate(-8deg)}
   .brand em{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;color:var(--gold)}
   .nav__links{display:flex;gap:4px}
@@ -401,7 +404,7 @@
   /* ---------- FOOTER ---------- */
   footer{background:var(--navy);color:rgba(255,255,255,.65);padding:56px 0 28px}
   .footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1)}
-  .footer__grid .brand{color:#fff}.footer__grid .brand__mark{background:var(--gold);color:var(--navy)}.footer__grid .brand em{color:var(--gold-2)}
+  .footer__grid .brand{color:#fff}.footer__grid .brand__mark svg{box-shadow:0 0 0 1px rgba(255,255,255,.14)}.footer__grid .brand em{color:var(--gold-2)}
   .footer__grid p{margin-top:14px;font-size:.92rem;max-width:36ch;line-height:1.65}
   .footer__grid h4{color:#fff;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
   .footer__grid li{margin-bottom:10px;font-size:.92rem}
@@ -459,7 +462,7 @@
   @media (max-width:380px){
     .container{padding:0 16px}
     .brand{font-size:1rem}
-    .brand__mark{width:34px;height:34px;font-size:1.15rem}
+    .brand__mark{width:34px;height:34px}
     .hero h1{font-size:2.1rem}
     .ccard{padding:16px}
     .ccard strong{font-size:.9rem}
@@ -478,7 +481,7 @@
 <header class="nav" id="nav">
   <div class="container nav__inner">
     <a href="#top" class="brand" aria-label="Taxfin Consulting home">
-      <span class="brand__mark">T</span>
+      <span class="brand__mark"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0B1D33"/><rect x="14" y="16" width="36" height="7" rx="1.5" fill="#C9A227"/><rect x="24.5" y="16" width="7" height="32" rx="1.5" fill="#C9A227"/><rect x="31.5" y="31" width="13" height="6" rx="1.5" fill="#E3BE4C"/></svg></span>
       <span>Taxfin <em>Consulting</em></span>
     </a>
     <nav class="nav__links" id="navLinks" aria-label="Primary">
@@ -831,7 +834,7 @@
   <div class="container">
     <div class="footer__grid">
       <div>
-        <a href="#top" class="brand"><span class="brand__mark">T</span><span>Taxfin <em>Consulting</em></span></a>
+        <a href="#top" class="brand"><span class="brand__mark"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0B1D33"/><rect x="14" y="16" width="36" height="7" rx="1.5" fill="#C9A227"/><rect x="24.5" y="16" width="7" height="32" rx="1.5" fill="#C9A227"/><rect x="31.5" y="31" width="13" height="6" rx="1.5" fill="#E3BE4C"/></svg></span><span>Taxfin <em>Consulting</em></span></a>
         <p>Bookkeeping, GST and TDS filing, financial statements and audit support for small businesses and startups.</p>
       </div>
       <div>

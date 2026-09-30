@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Taxfin Consulting">
+  <rect width="64" height="64" rx="14" fill="#0B1D33"/>
+  <rect x="14" y="16" width="36" height="7" rx="1.5" fill="#C9A227"/>
+  <rect x="24.5" y="16" width="7" height="32" rx="1.5" fill="#C9A227"/>
+  <rect x="31.5" y="31" width="13" height="6" rx="1.5" fill="#E3BE4C"/>
+</svg>
